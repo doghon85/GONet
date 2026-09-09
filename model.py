@@ -76,7 +76,7 @@ class GONet(nn.Module):
         self.PE = nn.Parameter(torch.rand(512))
         self.query = nn.Linear(128, 128)
         self.key_value = nn.Linear(128, 128)
-        self.self_attn = nn.MultiheadAttention(128, 4)
+        self.inter_individual_cross_attn = nn.MultiheadAttention(128, 4, batch_first=True)
 
         self.MLP = MLP(input_dim=1024, hidden_dim=256, output_dim=128, num_layers=2)
         self.order = nn.Linear(128, 3)
@@ -109,10 +109,10 @@ class GONet(nn.Module):
             q2 = self.query(pos_temp2_) 
             v2 = self.key_value(temp2_)
 
-            attention_score1 = self.self_attn(query=q1, key=q2, value=v2)[0] 
+            attention_score1 = self.inter_individual_cross_attn(query=q1, key=q2, value=v2)[0] 
             attention_score1 = attention_score1.reshape(q1.shape[0], -1) + temp1 
 
-            attention_score2 = self.self_attn(query=q2, key=q1, value=v1)[0] 
+            attention_score2 = self.inter_individual_cross_attn(query=q2, key=q1, value=v1)[0] 
             attention_score2 = attention_score2.reshape(q1.shape[0], -1) + temp2  
 
             attention_score = torch.concat([attention_score1, attention_score2], dim=1)
