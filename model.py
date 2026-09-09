@@ -131,5 +131,3 @@ class GONet(nn.Module):
         b = self.bias(torch.concat([com, value], dim=1)).squeeze(1) 
 
         return self.mean + b, order
-
-
