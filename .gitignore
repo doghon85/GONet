@@ -1,0 +1,32 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# IDE settings
+.vscode/
+.idea/
+
+# Training outputs and checkpoints
+result_*/
+results/
+runs/
+checkpoints/
+*.pth
+*.pt
+*.ckpt
+
+# Local data
+data/
+*.npy
+*.npz
+
+# OS files
+.DS_Store
+Thumbs.db
